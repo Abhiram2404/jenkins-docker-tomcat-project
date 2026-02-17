@@ -16,15 +16,18 @@ sudo systemctl enable docker
 
 - Pull the lightweight Alpine Jenkins image
 - This is the smallest official LTS (Long Term Support) image
+
 sudo docker pull jenkins/jenkins:lts-alpine
 
 - Run the container
 sudo docker run -d -p 8080:8080 --name jenkins-server jenkins/jenkins:lts-alpine
 #-----------------------------------------------------------------------------------------------
 Open your browser and enter: http://<YOUR_EC2_PUBLIC_IP>:8080
+
 sudo docker logs jenkins-server
 sudo docker ps -a --filter "name=jenkins-server"
 sudo docker logs jenkins-server
+
 -IF CONTAINER STOPED
 - Update your existing container with a restart policy
 sudo docker update --restart unless-stopped jenkins-server
