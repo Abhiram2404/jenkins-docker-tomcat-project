@@ -4,12 +4,12 @@ Setup DOCKER
 1.Log in to your AWS Console and go to EC2 > Security Groups.
 2.Edit Inbound Rules and add a custom TCP rule for Port 8080 with Source 0.0.0.0/0
 
-
 #-----------------------------------------------------------------------------------------------
-- update your instance 
+
+- Update your instance
 sudo dnf update -y
 
-- Install and start Docker (if not already installed)
+ Install and start Docker (if not already installed)
 sudo dnf install docker -y
 sudo systemctl start docker
 sudo systemctl enable docker
@@ -25,8 +25,7 @@ Open your browser and enter: http://<YOUR_EC2_PUBLIC_IP>:8080
 sudo docker logs jenkins-server
 sudo docker ps -a --filter "name=jenkins-server"
 sudo docker logs jenkins-server
-#IF CONTAINER STOPED
-
+-IF CONTAINER STOPED
 - Update your existing container with a restart policy
 sudo docker update --restart unless-stopped jenkins-server
 
@@ -41,6 +40,7 @@ myweb
 Setup TOMCAT
 create a Docker file to create a tomcat server with creating password and access to manager
 #-----------------------------------------------------------------------------------------------
+
 - Use the same base image we discussed
 FROM tomcat:9.0-jdk17-corretto-al2
 
@@ -96,4 +96,3 @@ fi
 - 3. Deploy to Tomcat (This requires the Jenkins user to have sudo/docker permissions)
 - If your Jenkins is in Docker, this command must be run on the HOST or via a remote trigger.
 sudo docker cp $WAR_FILE tomcat-manager-server:/usr/local/tomcat/webapps/
-********
