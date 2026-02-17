@@ -41,18 +41,26 @@ myweb
 Setup TOMCAT
 create a Docker file to create a tomcat server with creating password and access to manager
 #-----------------------------------------------------------------------------------------------
+- Use the same base image we discussed
 FROM tomcat:9.0-jdk17-corretto-al2
-- 1. Setting up the username, password, and roles in tomcat-users.xml
-- This appends both manager-gui (for browser) and manager-script (for Jenkins) roles
+
+- 1. FIX: Copy the default manager apps back into the webapps folder
+- This ensures the 'manager' folder actually exists before sed tries to read it
+RUN cp -av /usr/local/tomcat/webapps.dist/* /usr/local/tomcat/webapps/
+
+- 2. Setting up the username, password, and roles in tomcat-users.xml
 RUN sed -i '/<\/tomcat-users>/i \
 <role rolename="manager-gui"/>\n\
 <role rolename="manager-script"/>\n\
 <user username="admin" password="YourPassword123" roles="manager-gui,manager-script"/>' \
 /usr/local/tomcat/conf/tomcat-users.xml
-- 2. Disable the RemoteAddrValve to allow remote access
+
+- 3. Disable the RemoteAddrValve (This command will now work!)
 RUN sed -i 's/<Valve//g' /usr/local/tomcat/webapps/manager/META-INF/context.xml
+
 - Optional: Set the working directory
 WORKDIR /usr/local/tomcat/webapps/
+
 #-----------------------------------------------------------------------------------------------
 Steps to do after
 Updated Deployment Workflow
